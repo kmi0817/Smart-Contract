@@ -1,0 +1,23 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+{
+    view: "datatable", width: 800, minHeight: 500,
+    scroll: false,
+    columns: [
+        {
+            id: "title", fillspace: true,
+            header: ["Title", {content: "textFilter"}]
+        },
+        {
+            id: "created", width: 100,
+            header: [ {text: "Created", rowspan: 2}]
+        }
+    ],
+    pager: "pager"
+},
+{
+    view: "pager", id: "pager", size: 10, group: 5,
+    template: "{common.first()}{common.prev()}{common.pages()}{common.next()}{common.last()}"
+},
+{% endblock %}

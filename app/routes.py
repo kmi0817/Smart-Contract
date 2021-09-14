@@ -15,9 +15,9 @@ def home() :
 def data() :
     return render_template('data.html')
 
-@app.route('/comment')
-def comment() :
-    return render_template('comment.html')
+@app.route('/board')
+def board() :
+    return render_template('board.html')
 
 @app.route('/signin')
 def signin() :

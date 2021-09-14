@@ -30,6 +30,23 @@
             </tr>
         </table>
     `,
-    url: "../static/repo_list.json",
+    url: "../static/repo_list1.json"
 },
+{% endblock %}
+
+{% block functions %}
+$$("search").attachEvent("onTimedKeyPress", () => {
+    var value = $$("search").getValue().toLowerCase();
+    $$("dview").filter((obj) => {
+        return obj.name.toLowerCase().indexOf(value) != -1;
+    })
+});
+
+$(document).ready(() => {
+    $.ajax({
+        type: "GET",
+        url: "../static/repo_list10.json",
+        dataType: "json"
+    })
+})
 {% endblock %}

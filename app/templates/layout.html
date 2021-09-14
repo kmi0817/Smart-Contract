@@ -31,8 +31,8 @@
                                     click: () => {location.href="/data"}
                                 },
                                 {
-                                    view: "button", value: "Comment", width: 100,
-                                    click: () => {location.href="/comment"}
+                                    view: "button", value: "Board", width: 100,
+                                    click: () => {location.href="/board"}
                                 },
                                 {
                                     align: "right",
@@ -80,12 +80,9 @@
                 }
             });
 
-            $$("search").attachEvent("onTimedKeyPress", () => {
-                var value = $$("search").getValue().toLowerCase();
-                $$("dview").filter((obj) => {
-                    return obj.name.toLowerCase().indexOf(value) != -1;
-                })
-            })
+            {% block functions %}
+            {% endblock %}
+            
         });
     </script>
 </body>
