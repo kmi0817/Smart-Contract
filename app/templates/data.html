@@ -2,13 +2,34 @@
 
 {% block content %}
 {
-    view: "dataview",
-    id: "dataviews",
+    view: "toolbar",
+    elements: [{ view: "search", id: "search", width: 300, placeholder: "Search data",}]
+},
+{
+    view: "dataview", id: "dview", width: 800, autoheight: true,
     xCount: 1,
     type: {
-        height: 60,
+        width: 800,
+        height: 120,
     },
-    template: "데이터뷰인디",
-    data: "../staitc/repo_list.json"
+    template: `
+        <table class="container" width=775 stayle="padding: 10px">
+            <tr style="padding: 10px;">
+                <td style="font-size: 1.5em; font-weight: 500;"> #name#</td>
+                <td rowspan=4 width=200 style="text-align: center;">
+                    <div style="font-size: 1.5em; margin: 10px">&#11088 #star#</div>
+                    <div style="margin: 10px">&#128292 #language#</div>
+                    <div style="margin: 10px">&#9989 #license#</div>
+                </td>
+            </tr>
+            <tr>
+                <td>#create_time#</td>
+            </tr>
+            <tr>
+                <td># #tag#</td>
+            </tr>
+        </table>
+    `,
+    url: "../static/repo_list.json",
 },
 {% endblock %}

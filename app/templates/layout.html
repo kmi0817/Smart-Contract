@@ -79,6 +79,13 @@
                     ]
                 }
             });
+
+            $$("search").attachEvent("onTimedKeyPress", () => {
+                var value = $$("search").getValue().toLowerCase();
+                $$("dview").filter((obj) => {
+                    return obj.name.toLowerCase().indexOf(value) != -1;
+                })
+            })
         });
     </script>
 </body>
