@@ -1,0 +1,14 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+{
+    view: "dataview",
+    id: "dataviews",
+    xCount: 1,
+    type: {
+        height: 60,
+    },
+    template: "데이터뷰인디",
+    data: "../staitc/repo_list.json"
+},
+{% endblock %}
