@@ -1,0 +1,39 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+{
+    view: "list", id: "boardlist", width: 800, minHeight: 500,
+    scroll: false, select: true,
+    url: "http://127.0.0.1:5000/database/postings",
+    template: `#id#. #title# <div style="padding-left: 18px; font-size: 13px">created on #created_short#</div>`,
+    type: {
+        height: 70
+    },
+    click: () => {
+        var selected = $$('boardlist').getSelectedId();
+        if (selected) {
+            location.href=`/board/${selected}`;
+        } else {
+            webix.message({type: "debug", text: "Please click one more time"});
+        }
+    },
+    pager: "pager"
+},
+{
+    cols: [
+        {
+            view: "pager", id: "pager", size: 10, group: 5,
+            template: "{common.first()}{common.prev()}{common.pages()}{common.next()}{common.last()}"
+        },
+        {
+            view: "button", label: "write", width: 100,
+            type: "icon", icon: "wxi-pencil"
+        },
+        {
+            view: "button", label: "write", width: 100,
+            type: "icon", icon: "wxi-trash"
+        },
+    ]
+},
+
+{% endblock %}

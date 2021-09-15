@@ -1,0 +1,48 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+{
+    width: 600, minHeight: 400,
+    rows: [
+        {
+            template: "{{title}}", height: 50,
+        },
+        {
+            height: 32,
+            cols: [
+                {template: "{{created_on}}"},
+                {template: "{{writer}}"}
+            ]
+        },
+        {
+            template: "{{content}}"
+        }
+    ]
+},
+{view: "spacer", height: 5},
+{
+    view: "toolbar", borderless: true,
+    elements: [
+        {
+            view: "button", label: "back", width: 100,
+            type: "icon", icon: "wxi-angle-left",
+            click: () => {history.go(-1);}
+        },
+        {
+            align: "right",
+            body: {
+                cols: [
+                    {
+                        view: "button", label: "update", width: 100,
+                        type: "icon", icon: "wxi-pencil"
+                    },
+                    {
+                        view: "button", label: "delete", width: 100,
+                        type: "icon", icon: "wxi-trash"
+                    }
+                ]
+            }
+        }
+    ]
+},
+{% endblock %}

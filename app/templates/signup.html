@@ -1,0 +1,64 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+{
+    view: "form",
+    id: "signup_form",
+    width: 500,
+    elementsConfig: {
+        labelWidth: 130,
+    },
+    elements: [
+        {
+            cols: [
+                {
+                    view: "text", label: "Email", name: "email", required: true,
+                    placeholder: "name@domain.com", invalidMessage: "Invalid Email address form"
+                },
+                {
+                    view: "button", id: "btnDupCheck", width: 100, value: "Check", height: 30,
+                    click: () => {
+                        var cols = $$("btnDupCheck").getParentView(); // 중복 체크 버튼의 부모 == cols
+                        var signup_form = cols.getParentView(); // cols의 부모 == form
+                        var email_value = signup_form.getValues().email; // form 내 text 값 중 email 값 가져오기
+                        webix.message(email_value);
+                    }
+                }
+            ]
+        },
+        {
+            view: "text", type: "password", id: "pwd", label: "Password", name: "password", required: true,
+            invalidMessage: "Password can not be empty"
+        },
+        {
+            view: "text", type: "password", id: "pwdCheck", label: "Password Check", name: "passwordCheck", required: true,
+            invalidMessage: "Password Check can not be empty",
+        },
+        {
+            view: "button", id: "btnSubmit", value: "Submit", hotkey: "enter",
+            click: () => {
+                var signup_form = $$("btnSubmit").getParentView();
+                var values = signup_form.getValues();
+                var pwd = values.password;
+                var pwdCheck = values.passwordCheck;
+                if (pwd != pwdCheck) {
+                    webix.message({type: "error", text: "Password and PasswordCheck should be the same."});
+                } else {
+                    if (signup_form.validate()) {
+                        values = webix.ajax().stringify(values);
+
+                        webix.ajax().post("http://127.0.0.1:5000/process-signup", values)
+                            .then((res) => {location.href="/signin";});
+                    }
+                }
+            }
+        }
+
+    ],
+    rules: {
+        "email": webix.rules.isEmail,
+        "password": webix.rules.isNotEmpty,
+        "passwordCheck": webix.rules.isNotEmpty
+    }
+},
+{% endblock %}

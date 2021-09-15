@@ -1,0 +1,52 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+{
+    view: "toolbar",
+    elements: [{ view: "search", id: "search", width: 300, placeholder: "Search data",}]
+},
+{
+    view: "dataview", id: "dview", width: 800, autoheight: true,
+    xCount: 1,
+    type: {
+        width: 800,
+        height: 120,
+    },
+    template: `
+        <table class="container" width=775 stayle="padding: 10px">
+            <tr style="padding: 10px;">
+                <td style="font-size: 1.5em; font-weight: 500;"> #name#</td>
+                <td rowspan=4 width=200 style="text-align: center;">
+                    <div style="font-size: 1.5em; margin: 10px">&#11088 #star#</div>
+                    <div style="margin: 10px">&#128292 #language#</div>
+                    <div style="margin: 10px">&#9989 #license#</div>
+                </td>
+            </tr>
+            <tr>
+                <td>#create_time#</td>
+            </tr>
+            <tr>
+                <td># #tag#</td>
+            </tr>
+        </table>
+    `,
+    url: "../static/repo_list1.json"
+},
+{% endblock %}
+
+{% block functions %}
+$$("search").attachEvent("onTimedKeyPress", () => {
+    var value = $$("search").getValue().toLowerCase();
+    $$("dview").filter((obj) => {
+        return obj.name.toLowerCase().indexOf(value) != -1;
+    })
+});
+
+$(document).ready(() => {
+    $.ajax({
+        type: "GET",
+        url: "../static/repo_list10.json",
+        dataType: "json"
+    })
+})
+{% endblock %}
