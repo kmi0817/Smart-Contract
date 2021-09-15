@@ -1,7 +1,7 @@
 import re
 from app import app
 from app.models import Users, Postings, Comments
-from flask import render_template, redirect, url_for, session, request
+from flask import render_template, redirect, url_for, session, request, jsonify
 import sys
 
 @app.route('/')
@@ -18,6 +18,7 @@ def data() :
 @app.route('/board')
 def board() :
     return render_template('board.html')
+
 
 @app.route('/signin')
 def signin() :
@@ -65,3 +66,28 @@ def process_signup() :
 
     # 입력 데이터를 DB에 저장하기 ...
     return values
+
+
+
+
+# 데이터
+@app.route('/database/postings')
+def postings() :
+    postings = Postings.query.all()
+
+    output = []
+    for post in postings :
+        created_detail = post.created.strftime("%Y-%m-%d %H:%M")
+        created_short = post.created.strftime("%m/%d")
+        temp = {
+            'id' : post.id,
+            'user_id' : post.user_id,
+            'title' : post.title,
+            'created_detail' : created_detail,
+            'created_short' : created_short,
+            'content' : post.content
+        }
+
+        output.append(temp)
+    output = jsonify(output)
+    return output

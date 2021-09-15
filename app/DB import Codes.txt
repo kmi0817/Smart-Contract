@@ -1,0 +1,4 @@
+<Postings>
+db.session.add(Postings(user_id=1, title="Posting Test", content="DataTable is a JavaScript component that provides professional look-and-feel and convenient programming model for displaying data in a scrollable and sortable table. It is a powerful yet easy-to-use component that supports different data sources (XML, JSON, CSV, JSArray, HTML tables). Datatable has various possibilities (filtering, sorting, pagination, resizing, styling, copying etc.) and is still very good and fast at handling thousands of records"))
+db.session.add(Postings(user_id=1, title="Webix Tree", content="Tree is a pure JavaScript component for building various tree hierarchies.It's a powerful and customizable tool with lots of features: support for XML, JSON data sources, static and dynamic loading, multi tree drag-and-drop, inline editing, optional checkboxes, state saving, filtering, sorting, copying etc."))
+db.session.commit()
