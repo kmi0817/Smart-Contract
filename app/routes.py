@@ -19,6 +19,17 @@ def data() :
 def board() :
     return render_template('board.html')
 
+@app.route('/board/<int:id>')
+def board_posting(id) :
+    posting = Postings.query.filter_by(id=id).first()
+
+    title = posting.title
+    created_on = posting.created.strftime("%Y-%m-%d %H:%M")
+    writer = posting.user_id
+    content = posting.content
+
+    return render_template('board_posting.html', posting_id=id, title=title, created_on=created_on, writer=writer, content=content)
+
 
 @app.route('/signin')
 def signin() :
@@ -89,5 +100,22 @@ def postings() :
         }
 
         output.append(temp)
+    output = jsonify(output)
+    return output
+
+@app.route('/database/postings/<id>')
+def posting(id) :
+    posting = Postings.query.filter_by(id=id).first()
+
+    created_detail = posting.created.strftime("%Y-%m-%d %H:%M")
+    created_short = posting.created.strftime("%m/%d")
+    output = [{
+        'id' : posting.id,
+        'user_id' : posting.user_id,
+        'title' : posting.title,
+        'created_detail' : created_detail,
+        'created_short' : created_short,
+        'content' : posting.content
+    }]
     output = jsonify(output)
     return output
