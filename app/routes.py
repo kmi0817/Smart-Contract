@@ -13,14 +13,23 @@ def home() :
 
 @app.route('/data')
 def data() :
-    return render_template('data.html')
+    ret = False
+    if 'signin' in session :
+        ret = True
+    return render_template('data.html', signin=ret)
 
 @app.route('/board')
 def board() :
-    return render_template('board.html')
+    ret = False
+    if 'signin' in session :
+        ret = True
+    return render_template('board.html', signin=ret)
 
 @app.route('/board/<int:id>')
 def board_posting(id) :
+    ret = False
+    if 'signin' in session :
+        ret = True
     posting = Postings.query.filter_by(id=id).first()
 
     title = posting.title
@@ -28,11 +37,14 @@ def board_posting(id) :
     writer = posting.user_id
     content = posting.content
 
-    return render_template('board_posting.html', posting_id=id, title=title, created_on=created_on, writer=writer, content=content)
+    return render_template('board_posting.html', signin=ret, posting_id=id, title=title, created_on=created_on, writer=writer, content=content)
 
 @app.route('/board/write')
 def board_write() :
-    return render_template('board_write.html')
+    ret = False
+    if 'signin' in session :
+        ret = True
+    return render_template('board_write.html', signin=ret)
 
 @app.route('/signin')
 def signin() :
