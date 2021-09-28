@@ -30,6 +30,9 @@ def board_posting(id) :
 
     return render_template('board_posting.html', posting_id=id, title=title, created_on=created_on, writer=writer, content=content)
 
+@app.route('/board/write')
+def board_write() :
+    return render_template('write.html')
 
 @app.route('/signin')
 def signin() :
