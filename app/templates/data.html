@@ -6,7 +6,7 @@
     elements: [{ view: "search", id: "search", width: 300, placeholder: "Search data",}]
 },
 {
-    view: "dataview", id: "dview", width: 800, autoheight: true,
+    view: "dataview", id: "dview", width: 800, height: 1200,
     xCount: 1,
     type: {
         width: 800,
@@ -30,7 +30,12 @@
             </tr>
         </table>
     `,
-    url: "../static/repo_list1.json"
+    url: "../static/repo_list2.json",
+    pager: "pager"
+},
+{
+    view: "pager", id: "pager", size: 10, group: 7,
+    template: "{common.first()}{common.prev()}{common.pages()}{common.next()}{common.last()}"
 },
 {% endblock %}
 
@@ -41,12 +46,4 @@ $$("search").attachEvent("onTimedKeyPress", () => {
         return obj.name.toLowerCase().indexOf(value) != -1;
     })
 });
-
-$(document).ready(() => {
-    $.ajax({
-        type: "GET",
-        url: "../static/repo_list10.json",
-        dataType: "json"
-    })
-})
 {% endblock %}
