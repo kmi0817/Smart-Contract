@@ -32,7 +32,7 @@ def board_posting(id) :
 
 @app.route('/board/write')
 def board_write() :
-    return render_template('write.html')
+    return render_template('board_write.html')
 
 @app.route('/signin')
 def signin() :

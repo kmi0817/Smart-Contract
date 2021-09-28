@@ -54,12 +54,11 @@ webix.protoUI({
 
 {% block content %}
 {
-    view: "form", id: "board_create",
+    view: "form", id: "board_create", width: 1000, minHeight: 650,
     elements: [
         { view: "text", label: "title", },
         { view: "text", label: "writer" },
         {
-            width: 1000, height: 600,
             cols:[
                 {
                     view:"dhx-richtext", id:"richtext",
