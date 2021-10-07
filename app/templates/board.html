@@ -11,6 +11,7 @@
     },
     click: () => {
         var selected = $$('boardlist').getSelectedId();
+        
         if (selected) {
             location.href=`/board/${selected}`;
         } else {
