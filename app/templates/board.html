@@ -9,13 +9,13 @@
     type: {
         height: 70
     },
-    click: () => {
-        var selected = $$('boardlist').getSelectedId();
-        
-        if (selected) {
-            location.href=`/board/${selected}`;
-        } else {
-            webix.message({type: "debug", text: "Please click one more time"});
+    on: {
+        onItemClick: (id, e, node) => {
+            if (id) {
+                location.href=`/board/${id}`;
+            } else {
+                webix.message({type: "debug", text: "Please click one more time"});
+            }
         }
     },
     pager: "pager"
