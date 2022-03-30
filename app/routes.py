@@ -1,6 +1,8 @@
 from app import app
-from flask import render_template, redirect, url_for, session, request, jsonify
+from flask import render_template, session
+import json
 import pymongo
+import os.path
 
 try :
     mongo = pymongo.MongoClient(
@@ -15,7 +17,10 @@ except :
     
 @app.route('/index')
 def index() :
-    return render_template('index.html')
+    repos_path = os.getcwd() + '/app/static/repo_test.json'
+    with open(repos_path, 'r') as f :
+        repos = json.loads(f.read())
+    return render_template('index.html', repos=repos)
     
 @app.route('/')
 def home() :
