@@ -1,8 +1,19 @@
 from app import app
 from app.models import Users, Postings, Comments
 from flask import render_template, redirect, url_for, session, request, jsonify
-import sys
+import pymongo
 
+try :
+    mongo = pymongo.MongoClient(
+        host="localhost",
+        port=27017,
+        serverSelectionTimeoutMs = 1000
+    )
+    db = mongo.smart_contract
+    mongo.server_info() # trigger exception if cannot connect to db
+except :
+    print("** error - cannot connect to DB")
+    
 @app.route('/index')
 def index() :
     return render_template('index.html')
