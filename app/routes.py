@@ -1,4 +1,3 @@
-import re
 from app import app
 from app.models import Users, Postings, Comments
 from flask import render_template, redirect, url_for, session, request, jsonify
