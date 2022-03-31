@@ -52,7 +52,7 @@
                         <div class="card h-100">
                             {% if repos[i].star %}
                             <!-- Sale badge-->
-                            <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">⭐{{ repos[i].star }}</div>
+                            <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">{{ repos[i].star }} ⭐</div>
                             {% endif %}
                             <!-- Product details-->
                             <div class="card-body p-4">
@@ -61,22 +61,17 @@
                                     <h5 class="fw-bolder">{{ repos[i].name }}</h5>
                                     <hr>
                                     <!-- Product price-->
-                                    <!-- <table class="table">
+                                    <table class="table">
                                         <tbody>
                                             <tr>
                                                 <td>created at</td>
                                                 <td>{{ repos[i].create_time }}</td>
                                             </tr>
                                             <tr>
-                                                <td>updated at</td>
-                                                <td>{{ repos[i].updated }}</td>
+                                                <td colspan=2>{{ repos[i].updated }}</td>
                                             </tr>
                                         </tbody>
-                                    </table> -->
-                                    <ul class="list-group">
-                                        <li class="list-group-item">Created at {{ repos[i].create_time }}</li>
-                                        <li class="list-group-item">{{ repos[i].updated }}</li>
-                                    </ul>
+                                    </table>
                                 </div>
                             </div>
                         </div>
