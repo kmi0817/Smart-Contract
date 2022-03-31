@@ -15,7 +15,7 @@ try :
 except :
     print("** error - cannot connect to DB")
     
-@app.route('/index')
+@app.route('/')
 def index() :
     repos_path = os.getcwd() + '/app/static/repo_test.json'
     with open(repos_path, 'r') as f :
