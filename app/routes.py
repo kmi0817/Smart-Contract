@@ -22,13 +22,6 @@ def index() :
         repos = json.loads(f.read())
     return render_template('index.html', repos=repos)
     
-@app.route('/')
-def home() :
-    ret = False
-    if 'signin' in session :
-        ret = True
-    return render_template('home.html', signin=ret)
-
 @app.route('/data')
 def data() :
     ret = False
