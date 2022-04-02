@@ -47,7 +47,33 @@
         <section class="py-5" id="repos">
             <div class="container px-4 px-lg-5 mt-5">
                 <div id="card_container" class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-
+                    {% for i in repos %}
+                    <div class="col mb-5">
+                        <div class="card h-100">
+                            {% if repos[i].star %}
+                            <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">{{ repos[i].star }} ⭐</div>
+                            {% endif %}
+                            <div class="card-body p-4">
+                                <div class="text-center">
+                                    <!-- Product name-->
+                                    <h5 class="fw-bolder">{{ repos[i].name }}</h5>
+                                    <hr>
+                                    <table class="table">
+                                        <tbody>
+                                            <tr>
+                                                <td>created at</td>
+                                                <td>{{ repos[i].create_time }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan=2>{{ repos[i].updated }}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
                 </div>
             </div>
         </section>
@@ -63,7 +89,7 @@
         <script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
         <!-- Scroll Event -->
         <script>
-            let index = 0; // repo_1, repo_2 ...에서 1, 2 ... 나타냄
+            let index = 12; // repo_1, repo_2 ...에서 1, 2 ... 나타냄
 
             window.addEventListener("scroll", function() {
                 const scrollable = document.documentElement.scrollHeight - window.innerHeight;
