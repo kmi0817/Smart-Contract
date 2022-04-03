@@ -112,12 +112,17 @@
                                 var key = `repo_${index}`; 
                                 var repo = res[key];
                                 
-                                // #card_container에  repo 추가
+                                let content = `
+                                    <div class="col mb-5">
+                                        <div class="card h-100">
+                                `;
+                                // repo가 star 개수 가지면, 뱃지 추가
                                 if (repo.star != null) {
-                                    document.getElementById("card_container").innerHTML += `
-                                    <div class="col mb-5">
-                                        <div class="card h-100">
+                                    content += `
                                             <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">${repo.star} ⭐</div>
+                                    `;
+                                }
+                                content += `
                                             <div class="card-body p-4">
                                                 <div class="text-center">
                                                     <h5 class="fw-bolder">${repo.name}</h5>
@@ -138,32 +143,8 @@
                                         </div>
                                     </div>
                                     `;
-                                } else {
-                                    document.getElementById("card_container").innerHTML += `
-                                    <div class="col mb-5">
-                                        <div class="card h-100">
-                                            <div class="card-body p-4">
-                                                <div class="text-center">
-                                                    <h5 class="fw-bolder">${repo.name}</h5>
-                                                    <hr>
-                                                    <table class="table">
-                                                        <tbody>
-                                                            <tr>
-                                                                <td>created at</td>
-                                                                <td>${repo.create_time}</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td colspan=2>${repo.updated}</td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    `;
-                                }                              
-                                
+                                // #card_container에  repo 추가
+                                document.getElementById("card_container").innerHTML += content
                                 index++;
                             }
                         }
