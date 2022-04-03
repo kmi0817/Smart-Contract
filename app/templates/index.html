@@ -91,9 +91,9 @@
             let index = 12; // repo_1, repo_2 ...에서 1, 2 ... 나타냄
 
             window.addEventListener("scroll", function() {
-                const scrollable = document.documentElement.scrollHeight - window.innerHeight;
-                const scrolled = window.scrollY;
-                console.log(`scrollable: ${scrollable}, scrolled: ${scrolled}`);
+                const scrollable = document.documentElement.scrollHeight - window.innerHeight; // 스크롤 가능한 총 길이
+                const scrolled = window.scrollY; // 현 스크롤 위치
+
                 if (Math.ceil(scrolled) >= scrollable) {
                     $.ajax({
                         type: "GET",
@@ -115,7 +115,7 @@
                                 let content = `
                                     <div class="col mb-5">
                                         <div class="card h-100">
-                                `;
+                                    `;
                                 // repo가 star 개수 가지면, 뱃지 추가
                                 if (repo.star != null) {
                                     content += `
