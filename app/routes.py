@@ -20,13 +20,14 @@ def index() :
     repos_path = os.getcwd() + '/app/static/repo_list.json'
     with open(repos_path, 'r') as f :
         repos = json.loads(f.read())
-
+        total = len(repos) # the number of repositories
+        
         # only first 12 repositories will be printed
         repos_12 = []
         for i in range(12) : # append 12 repositories
             repos_12.append(repos['repo_' + str(i)])
         repos_12 = { i: repos_12[i] for i in range(len(repos_12))} # list -> dict
-    return render_template('index.html', repos=repos_12)
+    return render_template('index.html', total=total, repos=repos_12)
     
 @app.route('/data')
 def data() :
