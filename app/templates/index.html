@@ -45,7 +45,13 @@
         </header>
         <!-- Section-->
         <section class="py-5" id="repos">
-            <div class="container px-4 px-lg-5 mt-5">
+            <div class="container px-4 px-lg-5">
+                <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" placeholder="Repository name (No implementation)" aria-label="Repository name" aria-describedby="button-search">
+                        <button class="btn btn-outline-secondary" type="button" id="button-search">Search</button>
+                    </div>
+                </div>
                 <div id="card_container" class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
                     {% for i in repos %}
                     <div class="col mb-5">
