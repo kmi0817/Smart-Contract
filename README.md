@@ -36,3 +36,21 @@ python3 run.py
 ### 4. **Directory Structure**
 
 - working on...
+
+> ##### README.md
+>
+> ##### .gitignore
+>
+> run.py
+>
+> ##### app (directory)
+>
+> > ###### models (directory)
+> >
+> > ###### static (directory)
+> >
+> > ###### templates (directory)
+> >
+> > **init**.py
+> >
+> > routes.py
