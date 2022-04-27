@@ -1,20 +1,8 @@
 from app import app
 from flask import render_template, session, request
 import json
-import pymongo
 import os.path
 
-try :
-    mongo = pymongo.MongoClient(
-        host="localhost",
-        port=27017,
-        serverSelectionTimeoutMs = 1000
-    )
-    db = mongo.smart_contract
-    mongo.server_info() # trigger exception if cannot connect to db
-except :
-    print("** error - cannot connect to DB")
-    
 @app.route('/')
 def index() :
     # sorting parameter별 가져올 파일 처리

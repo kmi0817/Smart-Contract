@@ -19,7 +19,6 @@ python3 -m venv myvenv // In cwd, create a virtual environment for Flask
 source myvenv/bin/activate // Enter the virtual environment
 pip3 install flask
 pip3 install --upgrade pip // if necessary
-pip3 install pymongo
 ```
 
 ### 3. **Start Flask 😍**
