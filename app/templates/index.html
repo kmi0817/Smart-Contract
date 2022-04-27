@@ -51,6 +51,28 @@
                         <button class="btn btn-outline-secondary" type="button" id="button-search">Search</button>
                     </div>
                 </div>
+                <div class="d-flex justify-content-end">
+                    <div class="btn-group dropstart mb-3">
+                        <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                            Sorting
+                        </button>
+                        <ul class="dropdown-menu">
+                            <!-- Dropdown menu links -->
+                            <li>
+                                <form class="dropdown-item" method="GET">
+                                    <input type="hidden" value="sortedBy" name="star">
+                                    <button type="submit" class="btn btn-light">Most Stars</button>
+                                </form>
+                            </li>
+                            <li>
+                                <form class="dropdown-item" method="GET">
+                                    <input type="hidden" value="sortedBy" name="name">
+                                    <button type="submit" class="btn btn-light">Names Ascending</button>
+                                </form>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
                 <div id="card_container" class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
                     {% for i in repos %}
                     <div class="col mb-5">
