@@ -38,9 +38,9 @@ def index() :
         repos_12 = { i: repos_12[i] for i in range(len(repos_12))} # list -> dict
     return render_template('index.html', total=total, repos=repos_12, repos_path=repos_path)
     
-@app.route('/data')
+@app.route('/webix')
 def data() :
     ret = False
     if 'signin' in session :
         ret = True
-    return render_template('data.html', signin=ret)
+    return render_template('webix.html', signin=ret)
