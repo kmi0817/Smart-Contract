@@ -45,12 +45,12 @@
         <!-- Section-->
         <section class="py-5" id="repos">
             <div class="container px-4 px-lg-5">
-                <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+                <!-- <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
                     <div class="input-group mb-3">
                         <input id="input-search" type="text" class="form-control" placeholder="Repository name (No implementation)" aria-label="Repository name" aria-describedby="button-search" onkeyup="search()">
                         <button class="btn btn-outline-secondary" type="button" id="button-search">Search</button>
                     </div>
-                </div>
+                </div> -->
                 <div class="d-flex justify-content-end">
                     <div class="btn-group dropstart mb-3">
                         <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
@@ -60,13 +60,13 @@
                             <!-- Dropdown menu links -->
                             <li>
                                 <form class="dropdown-item" method="GET">
-                                    <input type="hidden" value="sortedBy" name="star">
+                                    <input type="hidden" value="star" name="sortedBy">
                                     <button type="submit" class="btn btn-light">Most Stars</button>
                                 </form>
                             </li>
                             <li>
                                 <form class="dropdown-item" method="GET">
-                                    <input type="hidden" value="sortedBy" name="name">
+                                    <input type="hidden" value="name" name="sortedBy">
                                     <button type="submit" class="btn btn-light">Names Ascending</button>
                                 </form>
                             </li>
