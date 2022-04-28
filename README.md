@@ -2,13 +2,10 @@
 
 ### 1. **Infomation 👀**
 
-| Type         | Language |
-| ------------ | -------- |
-| **Server**   | Flask    |
-| **Database** | MongoDB  |
-
-- This project doesn't use database yet.
-- But it has a connecting code with mongoDB.
+| Type       | Language |
+| ---------- | -------- |
+| **Server** | Flask    |
+| **Client** | Bootstrap|
 
 ### 2. **Build Flask**
 
