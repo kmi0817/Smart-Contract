@@ -139,7 +139,7 @@
                 if (Math.ceil(scrolled) >= scrollable) {
                     $.ajax({
                         type: "GET",
-                        url: "../../static/repo_list.json",
+                        url: "../../static/{{ repo_name }}",
                         dataType: "json",
                         success: function(res) {
                             const length = Object.keys(res).length; // repo 총 개수
