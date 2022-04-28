@@ -147,11 +147,11 @@
                             for (i = 0; i < 12; i++) { // 12개씩 loading
                                 if (index >= length) break; // 모든 repo 불러오면 더 이상 loading X
                                 /*
-                                    res: repo_list.json 파일이며 자바스크립트에선 Object
-                                    key: repo_1, repo_2 ...
+                                    res: {{ repo_name }} 파일이며 자바스크립트에선 Object
+                                    key: repo_new_1, repo_new_2 ...
                                     repo:  { name: ..., created_at: ... }
                                 */
-                                var key = `repo_${index}`; 
+                                var key = `repo_new_${index}`; 
                                 var repo = res[key];
                                 
                                 let content = `
@@ -185,7 +185,7 @@
                                         </div>
                                     </div>
                                     `;
-                                // #card_container에  repo 추가
+                                // #card_container에 repo 추가
                                 document.getElementById("card_container").innerHTML += content
                                 index++;
                             }
