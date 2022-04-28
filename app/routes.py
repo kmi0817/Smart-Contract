@@ -10,12 +10,15 @@ def index() :
     # sorting parameter별 가져올 json 파일 처리
     if request.args.get('sortedBy') == None : # 디폴트: created_by
         repo_name = create_json_sorted_by_created_at(direcotry_path + 'repo_list.json')
+        sorting_type = 'newly Created'
 
     elif request.args.get('sortedBy') == 'star' : # most stars
         repo_name = create_json_sorted_by_star(direcotry_path + 'repo_list_time_sort.json')
+        sorting_type = 'Most Stars'
 
     elif request.args.get('sortedBy') == 'name' : # name ascending
         repo_name = create_json_sorted_by_name(direcotry_path + 'repo_list_time_sort.json')
+        sorting_type = 'Names Ascending'
 
     # json 파일 경로 구성
     repos_path = direcotry_path + repo_name
@@ -31,7 +34,7 @@ def index() :
             repos_12.append(repos['repo_new_' + str(i)])
         repos_12 = { i: repos_12[i] for i in range(len(repos_12))} # list -> dict
         
-    return render_template('index.html', total=total, repos=repos_12, repo_name=repo_name)
+    return render_template('index.html', total=total, repos=repos_12, repo_name=repo_name, sorting_type=sorting_type)
     
 @app.route('/webix') # backup용 (무시)
 def data() :
