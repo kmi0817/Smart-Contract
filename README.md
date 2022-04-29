@@ -50,3 +50,14 @@ python3 run.py
 > > **init**.py
 > >
 > > routes.py
+
+<hr>
+
+## On the website, you can...
+### **Sort Repositories**
+- Default: Created date in the descending order
+- Option1: Stars in the descending order
+- Option2: Names in the ascending order
+
+### **Search Repositories**
+- To be continued
