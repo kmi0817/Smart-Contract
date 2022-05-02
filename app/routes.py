@@ -2,6 +2,7 @@ from app import app
 from flask import render_template, session, request
 import json
 import os.path
+import re
 
 direcotry_path = os.getcwd() + '/app/static/'
 
@@ -138,23 +139,24 @@ def create_json_sorted_by_star(original) :
     # print(key2_list)
 
     #정렬할 내용: 이름과 star
-    name_list = dict()
-    star_list = dict()
     l =range(len(j_file)) #json 파일의 개수
 
     #별의 개수대로 정렬
     star_list_null = dict()
-    star_list_not_null = dict()
+    star_list_not_null_alpha = dict()
+    star_list_not_null_num = dict()
     for i in l: #key1과 value2의 내용을 연결
         key1_name = 'repo_new_' + str(i)
         if j_file[key1_name]['star'] is not None: #null이 아닌 경우
-            star_list_not_null[key1_name] = j_file[key1_name]
+            if re.match('[^0-9]', j_file[key1_name]['star']):
+                star_list_not_null_alpha[key1_name] = j_file[key1_name]
+            else:
+                star_list_not_null_num[key1_name] = j_file[key1_name]
         else:
             star_list_null[key1_name] = j_file[key1_name]
     # print(star_list_not_null)
 
-    star_sort = dict(sorted(star_list_not_null.items(), key=lambda x :x[1]['star'], reverse=True))#star 순서대로 정렬
-    # print(star_sort)
+    star_sort = dict(sorted(star_list_not_null_num.items(), key=lambda x :int(x[1]['star']), reverse=True))#star 순서대로 정렬
 
     #정렬이 된 star을 먼저 새로운 key값을 붙여줌
     tmp_star = {}
@@ -177,10 +179,21 @@ def create_json_sorted_by_star(original) :
         f = {"repo_new_{}".format(lll):item}#tmp딕셔너리에 저장
         tmp_star_null.update(f)
 
+    # star 값이 이상한 dict에 새로운 key갑을 붙여줌
+    tmp_star_alpha = {}
+    k_star_alpha = list(star_list_not_null_alpha.keys())
+    lll_null = range(len(star_list_not_null_alpha))
+    for new_aa in lll_null:  # tmp의 key에 새로 정렬한 key의 순서대로 들어감
+        alpha = new_aa + lll + 1
+        new_key_star_alpha = k_star_alpha[new_aa]  # 새로 정렬된 딕셔너리 파일의 첫번쨰 key값을 지정해줌
+        item = dict(j_file[new_key_star_alpha].items())  # key1에 해당하는 value값을 가지고 옴
+        f = {"repo_new_{}".format(alpha): item}  # tmp딕셔너리에 저장
+        tmp_star_alpha.update(f)
 
-    tmp_star.update(tmp_star_null)#star 두가지 정렬 합치기
+    tmp_star.update(tmp_star_null)  # star 두가지 정렬 합치기
+    tmp_star.update(tmp_star_alpha)
 
-    #이름 정렬 json파일은 따로 저장
+    #정렬 json파일은 따로 저장
     file_name = 'repo_list_star_sort.json'
     file_path = direcotry_path + file_name
     with open(file_path, 'w', encoding='utf-8') as file:
