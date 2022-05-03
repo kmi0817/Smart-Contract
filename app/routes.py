@@ -8,18 +8,35 @@ direcotry_path = os.getcwd() + '/app/static/'
 
 @app.route('/')
 def index() :
-    # sorting parameter별 가져올 json 파일 처리
-    if request.args.get('sortedBy') == None : # 디폴트: created_by
-        repo_name = create_json_sorted_by_created_at(direcotry_path + 'repo_list.json')
-        sorting_type = 'newly Created'
+    # GET 가져오기
+    search = request.args.get('search')
+    sortedBy = request.args.get('sortedBy')
 
-    elif request.args.get('sortedBy') == 'star' : # most stars
-        repo_name = create_json_sorted_by_star(direcotry_path + 'repo_list_time_sort.json')
-        sorting_type = 'Most Stars'
+    # 검색어 입력X
+    if search == None :
+        # sorting parameter별 가져올 json 파일 처리
+        if sortedBy == None : # 디폴트: created_by
+            repo_name = create_json_sorted_by_created_at(direcotry_path + 'repo_list.json')
+            sorting_type = 'newly Created'
+        elif sortedBy == 'star' : # most stars
+            repo_name = create_json_sorted_by_star(direcotry_path + 'repo_list_time_sort.json')
+            sorting_type = 'Most Stars'
+        elif sortedBy == 'name' : # name ascending
+            repo_name = create_json_sorted_by_name(direcotry_path + 'repo_list_time_sort.json')
+            sorting_type = 'Names Ascending'
 
-    elif request.args.get('sortedBy') == 'name' : # name ascending
-        repo_name = create_json_sorted_by_name(direcotry_path + 'repo_list_time_sort.json')
-        sorting_type = 'Names Ascending'
+    # 검색어 입력O
+    else :
+        repo_searched = create_json_searched(direcotry_path + 'repo_list_time.json')
+        if sortedBy == None : # 디폴트: created_by
+            repo_name = create_json_sorted_by_created_at(direcotry_path + repo_searched)
+            sorting_type = 'newly Created'
+        elif sortedBy == 'star' : # 검색 결과에서 most stars 정렬
+            repo_name = create_json_sorted_by_star(direcotry_path + repo_searched)
+            sorting_type = 'Most Stars'
+        elif sortedBy == 'name' : # 검색 결과에서 name ascending 정렬
+            repo_name = create_json_sorted_by_name(direcotry_path + repo_searched)
+            sorting_type = 'Names Ascending'
 
     # json 파일 경로 구성
     repos_path = direcotry_path + repo_name
@@ -43,6 +60,11 @@ def data() :
     if 'signin' in session :
         ret = True
     return render_template('webix.html', signin=ret)
+
+# 검색 함수 (연구실 선배가 작성한 알고리즘)
+def create_json_searched(original) :
+    file_name = ''
+    return file_name
 
 # 정렬 함수 (연구실 선배가 작성한 알고리즘)
 def create_json_sorted_by_created_at(original) :
