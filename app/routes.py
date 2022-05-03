@@ -15,9 +15,9 @@ def index() :
     # 검색어 입력X
     if search == None :
         # sorting parameter별 가져올 json 파일 처리
-        if sortedBy == None : # 디폴트: created_by
+        if sortedBy == None or sortedBy == 'created_at': # 디폴트: created_by
             repo_name = create_json_sorted_by_created_at(direcotry_path + 'repo_list.json')
-            sorting_type = 'newly Created'
+            sorting_type = 'Newly Created'
         elif sortedBy == 'star' : # most stars
             repo_name = create_json_sorted_by_star(direcotry_path + 'repo_list_time_sort.json')
             sorting_type = 'Most Stars'
@@ -28,9 +28,9 @@ def index() :
     # 검색어 입력O
     else :
         repo_searched = create_json_searched(direcotry_path + 'repo_list_time.json')
-        if sortedBy == None : # 디폴트: created_by
+        if sortedBy == None or sortedBy == 'created_at': # 디폴트: created_by
             repo_name = create_json_sorted_by_created_at(direcotry_path + repo_searched)
-            sorting_type = 'newly Created'
+            sorting_type = 'Newly Created'
         elif sortedBy == 'star' : # 검색 결과에서 most stars 정렬
             repo_name = create_json_sorted_by_star(direcotry_path + repo_searched)
             sorting_type = 'Most Stars'

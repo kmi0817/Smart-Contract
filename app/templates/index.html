@@ -54,6 +54,12 @@
                             <!-- Dropdown menu links -->
                             <li>
                                 <form class="dropdown-item" method="GET">
+                                    <input type="hidden" value="created_at" name="sortedBy">
+                                    <button type="submit" class="btn btn-light">Newly Created</button>
+                                </form>
+                            </li>
+                            <li>
+                                <form class="dropdown-item" method="GET">
                                     <input type="hidden" value="star" name="sortedBy">
                                     <button type="submit" class="btn btn-light">Most Stars</button>
                                 </form>
