@@ -14,7 +14,7 @@ def index() :
     # GET 가져오기
     search = request.args.get('search')
     sortedBy = request.args.get('sortedBy')
-    print("search:", search)
+
     # 검색어 입력X
     if search == None :
         # sorting parameter별 가져올 json 파일 처리
@@ -30,7 +30,6 @@ def index() :
 
     # 검색어 입력O
     else :
-        print("In index, 검색어는 ", search)
         repo_searched = create_json_searched(direcotry_path + 'repo_list_time_sort.json', search)
         if sortedBy == None or sortedBy == 'created_at': # 디폴트: created_by
             repo_name = create_json_sorted_by_created_at(direcotry_path + repo_searched)
@@ -98,7 +97,6 @@ def create_json_searched(original, word) :
     file_path = direcotry_path + file_name
     with open(file_path, 'w', encoding='utf-8') as file:
         json.dump(tmp_search, file, indent="\t")
-    print("In search function!!!!")
     return file_name
 
 # 정렬 함수 (연구실 선배가 작성한 알고리즘)
