@@ -53,8 +53,25 @@
         <section class="py-5" id="repos">
             <div class="container px-4 px-lg-5">
                 <div class="d-flex justify-content-end">
-                    <!-- Sorting Buttons -->
                     <div class="btn-group dropstart mb-3">
+                        <!-- Download Button -->
+                        <button type="button" class="btn btn-light mx-2" onclick="download()">Download Selected Repos</button>
+                        <script>
+                            function download() {
+                                const name_download = document.getElementsByName("download"); // name='download'인 Element 모두 가져오기
+
+                                // name_download 순회하면서 check된 repository만 뽑아내기
+                                let checked_repositories = []
+                                name_download.forEach((e) => {
+                                    if (e.checked) {
+                                        console.log(e);
+                                        checked_repositories.push(e);
+                                    }
+                                });
+                                console.log(checked_repositories);
+                            }
+                        </script>
+                        <!-- Sorting Buttons -->
                         <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                             Sort: {{ sorting_type }}
                         </button>
