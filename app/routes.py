@@ -1,5 +1,5 @@
 from app import app
-from flask import render_template, session, request
+from flask import render_template, session, request, send_file
 import json
 import os.path
 import re # sortf
@@ -60,7 +60,15 @@ def index() :
         repos_printed = { i: repos_printed[i] for i in range(len(repos_printed))} # list -> dict
         
     return render_template('index.html', total=total, repos=repos_printed, repo_name=repo_name, sorting_type=sorting_type, search=search)
-    
+
+@app.route('/download-current-repositories', methods=['POST'])
+def download() :
+    repo_name = request.form['repo_name']
+    repos_path = direcotry_path + repo_name
+    print(repos_path)
+
+    return send_file(repos_path, as_attachment=True)
+
 @app.route('/webix') # backup용 (무시)
 def data() :
     ret = False
