@@ -20,10 +20,12 @@
                 <a class="navbar-brand fw-bold" href="/">Smart Contract</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <!-- Menus -->
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
                         <li class="nav-item"><a class="nav-link active" aria-current="page" href="#home">Home</a></li>
                         <li class="nav-item"><a class="nav-link" href="#repos">Repositories</a></li>
                     </ul>
+                    <!-- Search -->
                     <form class="d-flex">
                         <input type="text" class="form-control" placeholder="Repository name" name="search" id="search" aria-label="Repository name" aria-describedby="button-search">
                         <button class="btn btn-outline-secondary" type="submit" id="button-search">
@@ -51,6 +53,7 @@
         <section class="py-5" id="repos">
             <div class="container px-4 px-lg-5">
                 <div class="d-flex justify-content-end">
+                    <!-- Sorting Buttons -->
                     <div class="btn-group dropstart mb-3">
                         <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                             Sort: {{ sorting_type }}
@@ -88,11 +91,14 @@
                     </div>
                 </div>
                 <div id="card_container" class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+                    <!-- Print Repositories -->
                     {% for i in repos %}
                     <div class="col mb-5">
                         <div class="card h-100">
                             <div class="card-header">
+                                <!-- Checkbox for Download -->
                                 <input class="form-check-input" type="checkbox" value="repo_{{ i }}" name="download">
+                                <!-- Print the # of Stars if Stars exist -->
                                 {% if repos[i].star %}
                                 <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">{{ repos[i].star }} ⭐</div>
                                 {% endif %}
@@ -145,7 +151,7 @@
                 }
             }
         </script>
-        <!-- Scroll Event -->
+        <!-- Scroll Event: Load more Data on Scroll -->
         <script>
             let index = 12; // repo_1, repo_2 ...에서 1, 2 ... 나타냄
 
