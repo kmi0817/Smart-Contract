@@ -202,14 +202,19 @@
                                 let content = `
                                     <div class="col mb-5">
                                         <div class="card h-100">
+                                            <div class="card-header">
+                                                <!-- Checkbox for Download -->
+                                                <input class="form-check-input" type="checkbox" value="repo_{{ i }}" name="download">
                                     `;
                                 // repo가 star 개수 가지면, 뱃지 추가
                                 if (repo.star != null) {
                                     content += `
-                                            <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">${repo.star} ⭐</div>
+                                                <!-- Print the # of Stars if Stars exist -->
+                                                <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">${repo.star} ⭐</div>
                                     `;
                                 }
                                 content += `
+                                            </div>
                                             <div class="card-body p-4">
                                                 <div class="text-center">
                                                     <h5 class="fw-bolder repo-name">${repo.name}</h5>
