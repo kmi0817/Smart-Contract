@@ -60,18 +60,27 @@
                             <li>
                                 <form class="dropdown-item" method="GET">
                                     <input type="hidden" value="created_at" name="sortedBy">
+                                    {% if search != None %}
+                                    <input type="hidden" value="{{ search }}" name="search">
+                                    {% endif %}
                                     <button type="submit" class="btn btn-light">Newly Created</button>
                                 </form>
                             </li>
                             <li>
                                 <form class="dropdown-item" method="GET">
                                     <input type="hidden" value="star" name="sortedBy">
+                                    {% if search != None %}
+                                    <input type="hidden" value="{{ search }}" name="search">
+                                    {% endif %}
                                     <button type="submit" class="btn btn-light">Most Stars</button>
                                 </form>
                             </li>
                             <li>
                                 <form class="dropdown-item" method="GET">
                                     <input type="hidden" value="name" name="sortedBy">
+                                    {% if search != None %}
+                                    <input type="hidden" value="{{ search }}" name="search">
+                                    {% endif %}
                                     <button type="submit" class="btn btn-light">Names Ascending</button>
                                 </form>
                             </li>
