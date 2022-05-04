@@ -25,11 +25,16 @@
                         <li class="nav-item"><a class="nav-link" href="#repos">Repositories</a></li>
                     </ul>
                     <form class="d-flex">
-                        <input type="text" class="form-control" placeholder="Repository name" name="search" aria-label="Repository name" aria-describedby="button-search">
+                        <input type="text" class="form-control" placeholder="Repository name" name="search" id="search" aria-label="Repository name" aria-describedby="button-search">
                         <button class="btn btn-outline-secondary" type="submit" id="button-search">
                             <i class="bi bi-search me-1"></i>
                         </button>
                     </form>
+                    <!-- 쿼리 스트링에 있는 검색어가 검색창에 띄워지도록 함 -->
+                    <script>
+                        const URLSearch = new URLSearchParams(location.search); // 쿼리 스트링 가져오기
+                        document.getElementById("search").value = URLSearch.get("search"); // 검색창에 퀴리 스트링에 있는 검색어 설정
+                    </script>
                 </div>
             </div>
         </nav>
