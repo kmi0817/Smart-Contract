@@ -59,7 +59,7 @@ def index() :
         
         repos_printed = { i: repos_printed[i] for i in range(len(repos_printed))} # list -> dict
         
-    return render_template('index.html', total=total, repos=repos_printed, repo_name=repo_name, sorting_type=sorting_type)
+    return render_template('index.html', total=total, repos=repos_printed, repo_name=repo_name, sorting_type=sorting_type, search=search)
     
 @app.route('/webix') # backup용 (무시)
 def data() :
