@@ -148,10 +148,10 @@
                                 if (index >= length) break; // 모든 repo 불러오면 더 이상 loading X
                                 /*
                                     res: {{ repo_name }} 파일이며 자바스크립트에선 Object
-                                    key: repo_new_1, repo_new_2 ...
+                                    key: repo_1, repo_2 ...
                                     repo:  { name: ..., created_at: ... }
                                 */
-                                var key = `repo_new_${index}`; 
+                                var key = `repo_${index}`; 
                                 var repo = res[key];
                                 
                                 let content = `
