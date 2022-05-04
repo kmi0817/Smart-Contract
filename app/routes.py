@@ -63,10 +63,8 @@ def index() :
 
 @app.route('/download-current-repositories', methods=['POST'])
 def download() :
-    repo_name = request.form['repo_name']
-    repos_path = direcotry_path + repo_name
-    print(repos_path)
-
+    repo_name = request.form['repo_name'] # 다운로드할 JSON 데이터 제목 가져오기
+    repos_path = direcotry_path + repo_name # 경로와 파일 제목 합치기
     return send_file(repos_path, as_attachment=True)
 
 @app.route('/webix') # backup용 (무시)
