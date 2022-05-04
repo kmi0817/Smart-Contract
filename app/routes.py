@@ -50,13 +50,17 @@ def index() :
         repos = json.loads(f.read())
         total = len(repos) # the number of repositories
         
-        # only first 12 repositories will be printed
-        repos_12 = []
-        for i in range(12) : # append 12 repositories
-            repos_12.append(repos['repo_' + str(i)])
-        repos_12 = { i: repos_12[i] for i in range(len(repos_12))} # list -> dict
+        repos_printed = [] # 먼저 출력될 repository 담는 리스트
+        if total >= 12 : # repository가 12개 이상 존재할 때
+            for i in range(12) : # 12개의 repository를 append
+                repos_printed.append(repos['repo_' + str(i)])
+        else : # repository가 12개 미만으로 존재할 때
+            for i in range(total) : # 모든 repository를 append
+                repos_printed.append(repos['repo_' + str(i)])
         
-    return render_template('index.html', total=total, repos=repos_12, repo_name=repo_name, sorting_type=sorting_type)
+        repos_printed = { i: repos_printed[i] for i in range(len(repos_printed))} # list -> dict
+        
+    return render_template('index.html', total=total, repos=repos_printed, repo_name=repo_name, sorting_type=sorting_type)
     
 @app.route('/webix') # backup용 (무시)
 def data() :
