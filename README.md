@@ -60,4 +60,4 @@ python3 run.py
 - Option2: Names in the ascending order
 
 ### **Search Repositories**
-- To be continued
+- You can search repositories by repository name
