@@ -158,21 +158,6 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
         <!-- Core theme JS-->
         <script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
-        <!-- Search function -->
-        <script>
-            function search() {
-                const target_name = document.getElementById("input-search").value.toLowerCase();
-                const repo_names = document.getElementsByClassName("repo-name");
-                console.log(repo_names);
-                for (var i = 0; i < repo_names.length; i++) {
-                    if (repo_names[i].innerHTML.toLowerCase().includes(target_name)) {
-                        repo_names[i].parentNode.parentNode.parentNode.style.display = "flex";
-                    } else {
-                        repo_names[i].parentNode.parentNode.parentNode.style.display = "none";
-                    }
-                }
-            }
-        </script>
         <!-- Scroll Event: Load more Data on Scroll -->
         <script>
             let index = 12; // repo_1, repo_2 ...에서 1, 2 ... 나타냄
