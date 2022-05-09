@@ -78,7 +78,12 @@
                                     dataType: "JSON",
                                     contentType: "application/json",
                                     success: function(data) {
-                                        console.log(data);
+                                        var element = document.createElement('a'); // a 태그 생성
+                                        element.setAttribute("href", "../../static/repo_list_selected.json"); // href 속성에 다운로드할 파일 경로 넣기
+                                        element.setAttribute("download", "repo_list_selected.json"); // 다운로드하여 저장될 파일 이름 설정
+                                        document.body.appendChild(element); // body 태그에 a 태그 추가
+                                        element.click(); // a 태그 클릭하여 파일 다운로드 진행
+                                        document.body.removeChild(element); // a 태그 삭제
                                     },
                                     error: function(request, status, error) {
                                         console.log(error);
