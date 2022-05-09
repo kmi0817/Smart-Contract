@@ -66,14 +66,24 @@
                                 const name_download = document.getElementsByName("download"); // name='download'인 Element 모두 가져오기
 
                                 // name_download 순회하면서 check된 repository만 뽑아내기
-                                let checked_repositories = []
-                                name_download.forEach((e) => {
-                                    if (e.checked) {
-                                        console.log(e);
-                                        checked_repositories.push(e);
+                                let checked_repositories = { "repo_name": "{{ repo_name }}" }
+                                name_download.forEach((e, index) => {
+                                    if (e.checked) { checked_repositories[index] = e.value; }
+                                });
+
+                                $.ajax({
+                                    type: "POST",
+                                    url: "/download-selected-repositories",
+                                    data: JSON.stringify(checked_repositories),
+                                    dataType: "JSON",
+                                    contentType: "application/json",
+                                    success: function(data) {
+                                        console.log(data);
+                                    },
+                                    error: function(request, status, error) {
+                                        console.log(error);
                                     }
                                 });
-                                console.log(checked_repositories);
                             }
                         </script>
                         <!-- Sorting Buttons -->
