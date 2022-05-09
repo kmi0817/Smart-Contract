@@ -30,6 +30,7 @@ def index() :
 
     # 검색어 입력O
     else :
+        search = search.lower() # 소문자로 변경
         repo_searched = create_json_searched(direcotry_path + 'repo_list_time_sort.json', search)
         if sortedBy == None or sortedBy == 'created_at': # 디폴트: created_by
             repo_name = create_json_sorted_by_created_at(direcotry_path + repo_searched)
@@ -86,9 +87,13 @@ def create_json_searched(original, word) :
     find_list = dict()  # 단어를 포함하고 있는 문자열들만 저장하는 딕셔너리
     for i in l:  # key1과 value2의 내용을 연결, 새로운 딕셔너리 파일 생성
         value2 = j_file[key1_list[i]]['name']  # 찾아낸 value값만 따로 만들어둠
-        find_word = value2.find(word)  # 입력받은 문자 찾기
+
+        value2_lower = value2.lower() # 대소문자 상관없이 검색하도록 name 소문자 변환 코드 추가 by kmi0817
+
+        find_word = value2_lower.find(word)  # 입력받은 문자 찾기 ## 소문자 변환된 name으로 word 찾기 by kmi0817
+
         if find_word != -1:  # 문자를 포함하지 않는 경우 -1을 반환하므로 이보다 큰 수를 찾기
-            find_list[key1_list[i]] = value2
+            find_list[key1_list[i]] = value2 # 딕셔너리에는 원래 name으로 저장 (소문자 변환 버전X) by kmi0817
 
     ll = range(len(find_list))
     tmp_search = {}
