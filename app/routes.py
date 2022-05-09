@@ -1,3 +1,4 @@
+from select import select
 from app import app
 from flask import render_template, session, request, send_file
 import json
@@ -67,6 +68,31 @@ def download() :
     repo_name = request.form['repo_name'] # 다운로드할 JSON 데이터 제목 가져오기
     repos_path = direcotry_path + repo_name # 경로와 파일 제목 합치기
     return send_file(repos_path, as_attachment=True)
+
+@app.route('/download-selected-repositories', methods=['POST'])
+def download_selected_repositories() :
+    selected_repos = request.get_json(force=True) # POST로 보낸 데이터 받기
+
+    repo_name = selected_repos['repo_name'] # repo_name 추출 (repo_name : 현재 브라우저에 출력 중인 json 파일 제목)
+    del(selected_repos['repo_name']) # selected_repos에서 key == repo_name인 데이터 삭제
+
+    # 기존 repo_name 파일 open 해서 repository 가져오기
+    with open(direcotry_path + repo_name, "r") as file:
+        repositories_in_file = json.load(file)
+
+    # repository를 순회하며 selected_repos에 포함된 데이터는 temp_json에 추가
+    temp_json = dict()
+    for key, value in repositories_in_file.items() :
+        if key in selected_repos.values() :
+            temp_json[key] = value # 선택한 repository는 temp_json에 담음
+
+    # temp_json 데이터 담은 repo_list_selected.json 파일 생성
+    repos_path = direcotry_path + 'repo_list_selected.json'
+    with open(repos_path, 'w', encoding='utf-8') as file2 :
+        json.dump(temp_json, file2, indent='\t')
+
+    return send_file(repos_path, as_attachment=True)
+
 
 @app.route('/webix') # backup용 (무시)
 def data() :
