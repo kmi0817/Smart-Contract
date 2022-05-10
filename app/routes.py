@@ -4,9 +4,10 @@ from flask import render_template, session, request, send_file
 import json
 import os.path
 import re # sortf
+import zipfile # zip 객체
 from collections import defaultdict # search
 
-direcotry_path = os.getcwd() + '/app/static/data/'
+directory_path = os.getcwd() + '/app/static/data/'
 
 data = defaultdict(list) # for search
 
@@ -20,31 +21,31 @@ def index() :
     if search == None :
         # sorting parameter별 가져올 json 파일 처리
         if sortedBy == None or sortedBy == 'created_at': # 디폴트: created_by
-            repo_name = create_json_sorted_by_created_at(direcotry_path + 'repo_list.json')
+            repo_name = create_json_sorted_by_created_at(directory_path + 'repo_list.json')
             sorting_type = 'Newly Created'
         elif sortedBy == 'star' : # most stars
-            repo_name = create_json_sorted_by_star(direcotry_path + 'repo_list_time_sort.json')
+            repo_name = create_json_sorted_by_star(directory_path + 'repo_list_time_sort.json')
             sorting_type = 'Most Stars'
         elif sortedBy == 'name' : # name ascending
-            repo_name = create_json_sorted_by_name(direcotry_path + 'repo_list_time_sort.json')
+            repo_name = create_json_sorted_by_name(directory_path + 'repo_list_time_sort.json')
             sorting_type = 'Names Ascending'
 
     # 검색어 입력O
     else :
         search = search.lower() # 소문자로 변경
-        repo_searched = create_json_searched(direcotry_path + 'repo_list_time_sort.json', search)
+        repo_searched = create_json_searched(directory_path + 'repo_list_time_sort.json', search)
         if sortedBy == None or sortedBy == 'created_at': # 디폴트: created_by
-            repo_name = create_json_sorted_by_created_at(direcotry_path + repo_searched)
+            repo_name = create_json_sorted_by_created_at(directory_path + repo_searched)
             sorting_type = 'Newly Created'
         elif sortedBy == 'star' : # 검색 결과에서 most stars 정렬
-            repo_name = create_json_sorted_by_star(direcotry_path + repo_searched)
+            repo_name = create_json_sorted_by_star(directory_path + repo_searched)
             sorting_type = 'Most Stars'
         elif sortedBy == 'name' : # 검색 결과에서 name ascending 정렬
-            repo_name = create_json_sorted_by_name(direcotry_path + repo_searched)
+            repo_name = create_json_sorted_by_name(directory_path + repo_searched)
             sorting_type = 'Names Ascending'
 
     # json 파일 경로 구성
-    repos_path = direcotry_path + repo_name
+    repos_path = directory_path + repo_name
 
     # json 파일 내 12개의 repositories 정보만 가져옴
     with open(repos_path, 'r') as f :
@@ -66,33 +67,24 @@ def index() :
 @app.route('/download-current-repositories', methods=['POST'])
 def download() :
     repo_name = request.form['repo_name'] # 다운로드할 JSON 데이터 제목 가져오기
-    repos_path = direcotry_path + repo_name # 경로와 파일 제목 합치기
+    repos_path = directory_path + repo_name # 경로와 파일 제목 합치기
     return send_file(repos_path, as_attachment=True)
 
 @app.route('/download-selected-repositories', methods=['POST'])
 def download_selected_repositories() :
     selected_repos = request.get_json(force=True) # POST로 보낸 데이터 받기
 
-    repo_name = selected_repos['repo_name'] # repo_name 추출 (repo_name : 현재 브라우저에 출력 중인 json 파일 제목)
-    del(selected_repos['repo_name']) # selected_repos에서 key == repo_name인 데이터 삭제
+    changed_cwd = os.chdir(directory_path + 'zips/') # zips 디렉터리로 current working directory 경로 변경
+    zips_list = os.listdir(changed_cwd) # zips 디렉터리 내 모든 파일 리스트 가져오기
 
-    # 기존 repo_name 파일 open 해서 repository 가져오기
-    with open(direcotry_path + repo_name, "r") as file:
-        repositories_in_file = json.load(file)
+    selected_zips = [ zip for zip in zips_list if zip in selected_repos.values() ] # 선택된 레포지터리의 zip 파일 리스트
 
-    # repository를 순회하며 selected_repos에 포함된 데이터는 temp_json에 추가
-    temp_json = dict()
-    for key, value in repositories_in_file.items() :
-        if key in selected_repos.values() :
-            temp_json[key] = value # 선택한 repository는 temp_json에 담음
+    with zipfile.ZipFile('../selected_repos.zip', 'w') as z : # zip 파일 write 모드
+        for zip in selected_zips :
+            z.write(zip) # 선택된 레포지터리의 zip 파일들을 selected_repos.zip 파일에 write
+        z.close()
 
-    # temp_json 데이터 담은 repo_list_selected.json 파일 생성
-    repos_path = direcotry_path + 'repo_list_selected.json'
-    with open(repos_path, 'w', encoding='utf-8') as file2 :
-        json.dump(temp_json, file2, indent='\t')
-
-    return send_file(repos_path, as_attachment=True)
-
+    return {'message': "OK"}
 
 @app.route('/webix') # backup용 (무시)
 def data() :
@@ -131,7 +123,7 @@ def create_json_searched(original, word) :
         tmp_search.update(f)
 
     file_name = 'repo_list_search.json'
-    file_path = direcotry_path + file_name
+    file_path = directory_path + file_name
     with open(file_path, 'w', encoding='utf-8') as file:
         json.dump(tmp_search, file, indent="\t")
     return file_name
@@ -171,7 +163,7 @@ def create_json_sorted_by_created_at(original) :
 
     #이름 정렬 json파일은 따로 저장
     file_name = 'repo_list_time_sort.json'
-    file_path = direcotry_path + file_name
+    file_path = directory_path + file_name
     with open(file_path, 'w', encoding='utf-8') as file:
         json.dump(tmp_time, file, indent="\t")
     return file_name
@@ -215,7 +207,7 @@ def create_json_sorted_by_name(original) :
 
     #이름 정렬 json파일은 따로 저장
     file_name = 'repo_list_name_sort.json'
-    file_path = direcotry_path + file_name
+    file_path = directory_path + file_name
     with open(file_path, 'w', encoding='utf-8') as file:
         json.dump(tmp_name, file, indent="\t")
     return file_name
@@ -287,7 +279,7 @@ def create_json_sorted_by_star(original) :
 
     #정렬 json파일은 따로 저장
     file_name = 'repo_list_star_sort.json'
-    file_path = direcotry_path + file_name
+    file_path = directory_path + file_name
     with open(file_path, 'w', encoding='utf-8') as file:
         json.dump(tmp_star, file, indent="\t")
     return file_name
