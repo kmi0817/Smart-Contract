@@ -6,7 +6,7 @@ import os.path
 import re # sortf
 from collections import defaultdict # search
 
-direcotry_path = os.getcwd() + '/app/static/'
+direcotry_path = os.getcwd() + '/app/static/data/'
 
 data = defaultdict(list) # for search
 
