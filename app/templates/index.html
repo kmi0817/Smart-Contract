@@ -69,7 +69,7 @@
                                 let checked_repositories = {}
                                 name_download.forEach((e, index) => {
                                     if (e.checked) {
-                                        checked_repositories[index] = e.value.replace("/", ":") + ".zip"; // repository name에서 '/'를 ':'로 치환
+                                        checked_repositories[index] = e.value.replace("/", "_") + ".zip"; // repository name에서 '/'를 '_'로 치환
                                     }
                                 });
                                 console.log(checked_repositories);
