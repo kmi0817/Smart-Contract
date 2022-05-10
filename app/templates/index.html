@@ -66,11 +66,13 @@
                                 const name_download = document.getElementsByName("download"); // name='download'인 Element 모두 가져오기
 
                                 // name_download 순회하면서 check된 repository만 뽑아내기
-                                let checked_repositories = { "repo_name": "{{ repo_name }}" }
+                                let checked_repositories = {}
                                 name_download.forEach((e, index) => {
-                                    if (e.checked) { checked_repositories[index] = e.value; }
+                                    if (e.checked) {
+                                        checked_repositories[index] = e.value.replace("/", ":") + ".zip"; // repository name에서 '/'를 ':'로 치환
+                                    }
                                 });
-
+                                console.log(checked_repositories);
                                 $.ajax({
                                     type: "POST",
                                     url: "/download-selected-repositories",
@@ -79,8 +81,8 @@
                                     contentType: "application/json",
                                     success: function(data) {
                                         var element = document.createElement('a'); // a 태그 생성
-                                        element.setAttribute("href", "../../static/data/repo_list_selected.json"); // href 속성에 다운로드할 파일 경로 넣기
-                                        element.setAttribute("download", "repo_list_selected.json"); // 다운로드하여 저장될 파일 이름 설정
+                                        element.setAttribute("href", "../../static/data/selected_repos.zip"); // href 속성에 다운로드할 파일 경로 넣기
+                                        element.setAttribute("download", "selected_repos.zip"); // 다운로드하여 저장될 파일 이름 설정
                                         document.body.appendChild(element); // body 태그에 a 태그 추가
                                         element.click(); // a 태그 클릭하여 파일 다운로드 진행
                                         document.body.removeChild(element); // a 태그 삭제
@@ -134,7 +136,7 @@
                         <div class="card h-100">
                             <div class="card-header">
                                 <!-- Checkbox for Download -->
-                                <input class="form-check-input" type="checkbox" value="repo_{{ i }}" name="download">
+                                <input class="form-check-input" type="checkbox" value="{{ repos[i].name }}" name="download">
                                 <!-- Print the # of Stars if Stars exist -->
                                 {% if repos[i].star %}
                                 <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">{{ repos[i].star }} ⭐</div>
