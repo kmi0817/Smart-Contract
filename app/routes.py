@@ -1,15 +1,12 @@
 from select import select
 from app import app
-from flask import render_template, session, request, send_file
+from flask import render_template, request, send_file
 import json
 import os.path
-import re # sortf
+import re # sort
 import zipfile # zip 객체
-from collections import defaultdict # search
 
 directory_path = os.getcwd() + '/app/static/data/'
-
-data = defaultdict(list) # for search
 
 @app.route('/')
 def index() :
