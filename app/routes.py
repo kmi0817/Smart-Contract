@@ -57,12 +57,6 @@ def index() :
 
     return render_template('index.html', total=total, repos=repos_printed, repo_name=repo_name, sorting_type=sorting_type, search=search)
 
-@app.route('/download-current-repositories', methods=['POST'])
-def download() :
-    repo_name = request.form['repo_name'] # 다운로드할 JSON 데이터 제목 가져오기
-    repos_path = directory_path + repo_name # 경로와 파일 제목 합치기
-    return send_file(repos_path, as_attachment=True)
-
 @app.route('/download-selected-repositories', methods=['POST'])
 def download_selected_repositories() :
     selected_repos = request.get_json(force=True) # POST로 보낸 데이터 받기

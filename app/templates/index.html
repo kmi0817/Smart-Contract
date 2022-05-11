@@ -54,13 +54,8 @@
             <div class="container px-4 px-lg-5">
                 <div class="d-flex justify-content-end">
                     <div class="btn-group dropstart mb-3">
-                        <!-- Download Button: 현재 출력되고 있는 레포지터리 파일 다운로드 -->
-                        <form action="/download-current-repositories" method="POST">
-                            <input type="hidden" value="{{ repo_name }}" name="repo_name">
-                            <button type="submit" class="btn btn-dark mx-2">Download Current Repositories</button>
-                        </form>
                         <!-- Download Button -->
-                        <button type="button" class="btn btn-outline-secondary mx-2" onclick="download()">Download Selected Repositories</button>
+                        <button type="button" class="btn btn-dark mx-2" onclick="download()">Download Selected Repositories</button>
                         <script>
                             function download() {
                                 const name_download = document.getElementsByName("download"); // name='download'인 Element 모두 가져오기
