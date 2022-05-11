@@ -29,7 +29,11 @@ def index() :
     # 검색어 입력O
     else :
         search = search.lower() # 소문자로 변경
+
+        create_json_sorted_by_created_at(directory_path + 'repo_list.json') # 전체 레포지터리에서 created_by 정렬
+            # 이 코드 없으면 문제 발생 ex) auto 검색 후 곧 바로 asd 검색할 경우 auto 검색 결과에서 asd를 검색함
         repo_searched = create_json_searched(directory_path + 'repo_list_time_sort.json', search)
+        
         if sortedBy == None or sortedBy == 'created_at': # 디폴트: created_by
             repo_name = create_json_sorted_by_created_at(directory_path + repo_searched)
             sorting_type = 'Newly Created'
