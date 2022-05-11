@@ -49,16 +49,12 @@ def index() :
         repos = json.loads(f.read())
         total = len(repos) # the number of repositories
         
-        repos_printed = [] # 먼저 출력될 repository 담는 리스트
         if total >= 12 : # repository가 12개 이상 존재할 때
-            for i in range(12) : # 12개의 repository를 append
-                repos_printed.append(repos['repo_' + str(i)])
+            repos_printed = { i: repos[f'repo_{i}'] for i in range(12) } # 12개의 repository를 append
+
         else : # repository가 12개 미만으로 존재할 때
-            for i in range(total) : # 모든 repository를 append
-                repos_printed.append(repos['repo_' + str(i)])
-        
-        repos_printed = { i: repos_printed[i] for i in range(len(repos_printed))} # list -> dict
-        
+            repos_printed = { i: repos[f'repo_{i}'] for i in range(total) } # 모든 repository를 append
+
     return render_template('index.html', total=total, repos=repos_printed, repo_name=repo_name, sorting_type=sorting_type, search=search)
 
 @app.route('/download-current-repositories', methods=['POST'])
