@@ -93,39 +93,28 @@ def data() :
         ret = True
     return render_template('webix.html', signin=ret)
 
-# 검색 함수 (연구실 선배가 작성한 알고리즘)
+# 검색 함수
 def create_json_searched(original, word) :
     with open(original, "r") as f:
-        j_file = json.load(f)
-    key1_list = list(j_file.keys())  # 첫번째 key
-    value1_list = list(j_file.values())
-    key2_list = list(value1_list[0])  # 두번째 key
-    l = range(len(j_file))  # json 파일의 개수
+        repo_list = json.load(f)
 
-    find_list = dict()  # 단어를 포함하고 있는 문자열들만 저장하는 딕셔너리
-    for i in l:  # key1과 value2의 내용을 연결, 새로운 딕셔너리 파일 생성
-        value2 = j_file[key1_list[i]]['name']  # 찾아낸 value값만 따로 만들어둠
+    # repo_list 딕셔너리의 key와 value를 순회하면서 value['name']에 검색어(word)가 포함되어 있다면  searched_list 추가하기
+        # key 값이 순차적으로 증가하지 않음 ex) { 'repo_0': {  ... }, 'repo_1891': { ... } } 
+    searched_list = {
+        key : value for key, value in repo_list.items() if word in value['name'].lower()
+    }
 
-        value2_lower = value2.lower() # 대소문자 상관없이 검색하도록 name 소문자 변환 코드 추가 by kmi0817
-
-        find_word = value2_lower.find(word)  # 입력받은 문자 찾기 ## 소문자 변환된 name으로 word 찾기 by kmi0817
-
-        if find_word != -1:  # 문자를 포함하지 않는 경우 -1을 반환하므로 이보다 큰 수를 찾기
-            find_list[key1_list[i]] = value2 # 딕셔너리에는 원래 name으로 저장 (소문자 변환 버전X) by kmi0817
-
-    ll = range(len(find_list))
-    tmp_search = {}
-    k_search = list(find_list.keys())  # 찾은 값의 key값
-    for a in ll:
-        new_key_search = k_search[a]  # 새로 정렬된 딕셔너리 파일의 첫번쨰 key값을 그대로 가져옴
-        item = dict(j_file[new_key_search].items())  # key1에 해당하는 value값을 가지고 옴
-        f = {"repo_{}".format(a): item}  # tmp딕셔너리에 저장
-        tmp_search.update(f)
+    # repo_list의 value를 순회하면서 refined_searched_list에 추가하기
+        # refined_searched_list의 key는 순차적으로 증가함
+    refined_searched_list = {
+        f'repo_{i}' : value for i, value in enumerate(searched_list.values())
+    }
 
     file_name = 'repo_list_search.json'
     file_path = directory_path + file_name
     with open(file_path, 'w', encoding='utf-8') as file:
-        json.dump(tmp_search, file, indent="\t")
+        json.dump(refined_searched_list, file, indent="\t")
+
     return file_name
 
 # 정렬 함수 (연구실 선배가 작성한 알고리즘)
