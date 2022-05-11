@@ -178,74 +178,31 @@ def create_json_sorted_by_name(original) :
         json.dump(tmp_name, file, indent="\t")
     return file_name
 
+# Most Stars 정렬
 def create_json_sorted_by_star(original) :
     with open(original,"r") as f:
-        j_file = json.load(f)
-    # print(json.dumps(j_file, sort_keys=False, indent=4))
+        repo_list = json.load(f)
 
-    key1_list = list(j_file.keys()) #첫번째 key
-    value1_list = list(j_file.values())
-    key2_list = list(value1_list[0].keys()) #두번째 key
-    # print(key2_list)
+    repos_have_star = [] # star 필드가 0 ~ 9인 value 담는 리스트
+    repos_dont_have_star = [] # star 필드가 null이거나 이상한 값인 value 담는 리스트
 
-    #정렬할 내용: 이름과 star
-    l =range(len(j_file)) #json 파일의 개수
+    for value in repo_list.values() :  # 모든 value를 순회하며 star 필드 값에 따라 서로 다른 리스트에 담기
+        if value['star'] is not None :
+            if re.match('[^0-9]', value['star']) :
+                repos_dont_have_star.append(value) # 이상한 값
+            else :
+                repos_have_star.append(value) # 0 ~ 9
+        else :
+            repos_dont_have_star.append(value) # null
 
-    #별의 개수대로 정렬
-    star_list_null = dict()
-    star_list_not_null_alpha = dict()
-    star_list_not_null_num = dict()
-    for i in l: #key1과 value2의 내용을 연결
-        key1_name = 'repo_' + str(i)
-        if j_file[key1_name]['star'] is not None: #null이 아닌 경우
-            if re.match('[^0-9]', j_file[key1_name]['star']):
-                star_list_not_null_alpha[key1_name] = j_file[key1_name]
-            else:
-                star_list_not_null_num[key1_name] = j_file[key1_name]
-        else:
-            star_list_null[key1_name] = j_file[key1_name]
-    # print(star_list_not_null)
+    sorted_list = sorted(repos_have_star, key=lambda x : int(x['star']), reverse=True) # star 내림차순 정렬
+    sorted_list.extend(repos_dont_have_star) # 두 리스트 합치기
 
-    star_sort = dict(sorted(star_list_not_null_num.items(), key=lambda x :int(x[1]['star']), reverse=True))#star 순서대로 정렬
-
-    #정렬이 된 star을 먼저 새로운 key값을 붙여줌
-    tmp_star = {}
-    k_star=list(star_sort.keys())
-    ll =range(len(star_sort))
-    for a in ll: # tmp의 key에 새로 정렬한 key의 순서대로 들어감
-        new_key_star = k_star[a] #새로 정렬된 딕셔너리 파일의 첫번쨰 key값을 지정해줌
-        item = dict(j_file[new_key_star].items()) #key1에 해당하는 value값을 가지고 옴
-        f = {"repo_{}".format(a):item}#tmp딕셔너리에 저장
-        tmp_star.update(f)
-
-    #star이 없는 dict에 새로운 key갑을 붙여줌
-    tmp_star_null = {}
-    k_star_null=list(star_list_null.keys())
-    ll_null =range(len(star_list_null))
-    for new_a in ll_null: # tmp의 key에 새로 정렬한 key의 순서대로 들어감
-        lll=new_a+a+1
-        new_key_star_null = k_star_null[new_a] #새로 정렬된 딕셔너리 파일의 첫번쨰 key값을 지정해줌
-        item = dict(j_file[new_key_star_null].items()) #key1에 해당하는 value값을 가지고 옴
-        f = {"repo_{}".format(lll):item}#tmp딕셔너리에 저장
-        tmp_star_null.update(f)
-
-    # star 값이 이상한 dict에 새로운 key갑을 붙여줌
-    tmp_star_alpha = {}
-    k_star_alpha = list(star_list_not_null_alpha.keys())
-    lll_null = range(len(star_list_not_null_alpha))
-    for new_aa in lll_null:  # tmp의 key에 새로 정렬한 key의 순서대로 들어감
-        alpha = new_aa + lll + 1
-        new_key_star_alpha = k_star_alpha[new_aa]  # 새로 정렬된 딕셔너리 파일의 첫번쨰 key값을 지정해줌
-        item = dict(j_file[new_key_star_alpha].items())  # key1에 해당하는 value값을 가지고 옴
-        f = {"repo_{}".format(alpha): item}  # tmp딕셔너리에 저장
-        tmp_star_alpha.update(f)
-
-    tmp_star.update(tmp_star_null)  # star 두가지 정렬 합치기
-    tmp_star.update(tmp_star_alpha)
+    refined_sorted_list = { f'repo_{i}' : value for i, value in enumerate(sorted_list) } # 딕셔너리 생성
 
     #정렬 json파일은 따로 저장
     file_name = 'repo_list_star_sort.json'
     file_path = directory_path + file_name
     with open(file_path, 'w', encoding='utf-8') as file:
-        json.dump(tmp_star, file, indent="\t")
+        json.dump(refined_sorted_list, file, indent="\t")
     return file_name
