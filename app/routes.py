@@ -86,13 +86,6 @@ def download_selected_repositories() :
 
     return {'message': "OK"}
 
-@app.route('/webix') # backup용 (무시)
-def data() :
-    ret = False
-    if 'signin' in session :
-        ret = True
-    return render_template('webix.html', signin=ret)
-
 # 검색 함수
 def create_json_searched(original, word) :
     with open(original, "r") as f:
