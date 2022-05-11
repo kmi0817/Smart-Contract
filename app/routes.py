@@ -1,9 +1,8 @@
-from select import select
 from app import app
-from flask import render_template, request, send_file
+from flask import render_template, request
 import json
 import os.path
-import re # sort
+import re # Most Stars sort
 import zipfile # zip 객체
 
 directory_path = os.getcwd() + '/app/static/data/'
