@@ -105,11 +105,10 @@ def create_json_searched(original, word) :
     }
 
     # repo_list의 value를 순회하면서 refined_searched_list에 추가하기
-        # refined_searched_list의 key는 순차적으로 증가함
-    refined_searched_list = {
-        f'repo_{i}' : value for i, value in enumerate(searched_list.values())
-    }
+    # refined_searched_list의 key는 순차적으로 증가함
+    refined_searched_list = { f'repo_{i}' : value for i, value in enumerate(searched_list.values())  } # 딕셔너리로 생성
 
+    # JSON 파일 생성
     file_name = 'repo_list_search.json'
     file_path = directory_path + file_name
     with open(file_path, 'w', encoding='utf-8') as file:
@@ -127,7 +126,7 @@ def create_json_sorted_by_created_at(original) :
 
     refined_sorted_list = { f'repo_{i}' : value for i, value in enumerate(sorted_list) } # 딕셔너리로 생성
 
-    #이름 정렬 json파일은 따로 저장
+    # JSON 파일 생성
     file_name = 'repo_list_time_sort.json'
     file_path = directory_path + file_name
     with open(file_path, 'w', encoding='utf-8') as file:
@@ -156,7 +155,7 @@ def create_json_sorted_by_star(original) :
 
     refined_sorted_list = { f'repo_{i}' : value for i, value in enumerate(sorted_list) } # 딕셔너리 생성
 
-    #정렬 json파일은 따로 저장
+    # JSON 파일 생성
     file_name = 'repo_list_star_sort.json'
     file_path = directory_path + file_name
     with open(file_path, 'w', encoding='utf-8') as file:
@@ -173,7 +172,7 @@ def create_json_sorted_by_name(original) :
 
     refined_sorted_list = { f'repo_{i}' : value for i, value in enumerate(sorted_list) } # 딕셔너리로 생성
 
-    #이름 정렬 json파일은 따로 저장
+    # JSON 파일 생성
     file_name = 'repo_list_name_sort.json'
     file_path = directory_path + file_name
     with open(file_path, 'w', encoding='utf-8') as file:
