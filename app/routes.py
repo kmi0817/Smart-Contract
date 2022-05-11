@@ -117,44 +117,21 @@ def create_json_searched(original, word) :
 
     return file_name
 
-# 정렬 함수 (연구실 선배가 작성한 알고리즘)
+# Newly Created 정렬
 def create_json_sorted_by_created_at(original) :
     with open(original,"r") as f:
-        j_file = json.load(f)
+        repo_list = json.load(f)
 
-    #key와 value를 분리
-    key1_list = list(j_file.keys()) #첫번째 key
-    value1_list = list(j_file.values())
-    key2_list = list(value1_list[0].keys()) #두번째 key
-    # print(key2_list)
+    sorted_list = sorted(repo_list.values(), key=lambda x : x['create_time'], reverse=True) # create_time 내림차순 정렬
+        # 타입이 리스트임 ex) [ { "name": "pasDamola/smart_contract_repo", ... }, { "name": "matiasdamelio/smart_contract_bootcamp" }, ... ]
 
-    #정렬을 위해 두번째 key만 분류
-    time_list = dict()
-
-    l =range(len(j_file)) #json 파일의 개수
-    for i in l: #key1과 value2의 내용을 연결
-        key1_name = 'repo_' + str(i)
-        time_list[key1_name] = j_file[key1_name]['create_time']
-    # print(json.dumps(updated_list, sort_keys=False, indent=4))
-
-    #날짜 순서대로 정렬해줌
-    time_sort = dict(sorted(time_list.items(), key=lambda x :x[1], reverse = True))
-
-    #시간 순서대로 정렬된 것을 다신 json에 저장
-    tmp_time = {}
-    k_time=list(time_sort.keys())
-    for a in l: # tmp의 key에 새로 정렬한 key의 순서대로 들어감
-        new_key_time = k_time[a] #새로 정렬된 딕셔너리 파일의 첫번쨰 key값을 지정해줌
-        item = dict(j_file[new_key_time].items()) #key1에 해당하는 value값을 가지고 옴
-        f = {"repo_{}".format(a):item}#tmp딕셔너리에 저장
-        tmp_time.update(f)
-    # print(tmp_time)
+    refined_sorted_list = { f'repo_{i}' : value for i, value in enumerate(sorted_list) } # 딕셔너리로 생성
 
     #이름 정렬 json파일은 따로 저장
     file_name = 'repo_list_time_sort.json'
     file_path = directory_path + file_name
     with open(file_path, 'w', encoding='utf-8') as file:
-        json.dump(tmp_time, file, indent="\t")
+        json.dump(refined_sorted_list, file, indent="\t")
     return file_name
 
 def create_json_sorted_by_name(original) :
